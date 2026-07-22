@@ -1,14 +1,15 @@
 import React, { type ReactNode } from 'react';
-import {
-  Dropdown,
-  DropdownButton,
-} from '@openedx/paragon';
-import { Link } from 'react-router-dom';
+import { Dropdown, DropdownButton } from '@openedx/paragon';
+import { getNavItemLinkProps, ExternalLinkIcon, type NavItemLinkEntry } from './navItemLink';
+
+export interface NavDropdownMenuItem extends NavItemLinkEntry {
+  title: ReactNode;
+}
 
 interface Props {
   id: string;
   buttonTitle: ReactNode;
-  items: { title: ReactNode; href: string; }[];
+  items: NavDropdownMenuItem[];
 }
 
 const NavDropdownMenu = ({
@@ -22,14 +23,14 @@ const NavDropdownMenu = ({
     variant="outline-primary"
     className="mr-2"
   >
-    {items.map(item => (
+    {items.map((item) => (
       <Dropdown.Item
-        as={Link}
         key={`${item.title}-dropdown-item`}
-        to={item.href}
         className="small"
+        {...getNavItemLinkProps(item)}
       >
         {item.title}
+        {item.openInNewTab && <ExternalLinkIcon className="float-right" />}
       </Dropdown.Item>
     ))}
   </DropdownButton>

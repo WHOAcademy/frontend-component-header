@@ -11,6 +11,11 @@ const messages = defineMessages({
     defaultMessage: 'Logout',
     description: 'Logout link',
   },
+  'header.user.menu.feedback': {
+    id: 'header.user.menu.feedback',
+    defaultMessage: 'Feedback',
+    description: 'Link to the WHO Academy feedback form',
+  },
   'header.label.account.menu': {
     id: 'header.label.account.menu',
     defaultMessage: 'Account Menu',

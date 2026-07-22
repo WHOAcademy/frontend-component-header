@@ -64,4 +64,31 @@ describe('NavDropdownMenu Component', () => {
     const externalLink = screen.getByText(defaultProps.items[1].title);
     expect(externalLink.getAttribute('href')).toBe(defaultProps.items[1].href);
   });
+
+  test('renders an item with external: true as a plain anchor with no target', () => {
+    const props = {
+      ...defaultProps,
+      items: [{ href: 'https://awards.example.com/course-1', title: 'Awards', external: true }],
+    };
+    render(<RootWrapper {...props} />);
+
+    fireEvent.click(screen.getByRole('button', { name: props.buttonTitle }));
+    const link = screen.getByText('Awards').closest('a');
+    expect(link).toHaveAttribute('href', props.items[0].href);
+    expect(link).not.toHaveAttribute('target');
+  });
+
+  test('renders an item with openInNewTab: true as an anchor opening in a new tab', () => {
+    const props = {
+      ...defaultProps,
+      items: [{ href: 'https://analytics.example.com', title: 'Analytics', openInNewTab: true }],
+    };
+    render(<RootWrapper {...props} />);
+
+    fireEvent.click(screen.getByRole('button', { name: props.buttonTitle }));
+    const link = screen.getByText('Analytics').closest('a');
+    expect(link).toHaveAttribute('href', props.items[0].href);
+    expect(link).toHaveAttribute('target', '_blank');
+    expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+  });
 });

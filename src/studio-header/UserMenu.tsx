@@ -13,7 +13,6 @@ const UserMenu = ({
   logoutUrl,
   authenticatedUserAvatar,
   isMobile,
-  isAdmin,
 }) => {
   const intl = useIntl();
   const avatar = authenticatedUserAvatar ? (
@@ -41,7 +40,6 @@ const UserMenu = ({
         studioBaseUrl,
         logoutUrl,
         intl,
-        isAdmin,
       })}
     />
   );
@@ -53,12 +51,10 @@ UserMenu.propTypes = {
   logoutUrl: PropTypes.string.isRequired,
   authenticatedUserAvatar: PropTypes.string,
   isMobile: PropTypes.bool,
-  isAdmin: PropTypes.bool,
 };
 
 UserMenu.defaultProps = {
   isMobile: false,
-  isAdmin: false,
   authenticatedUserAvatar: null,
   username: null,
 };

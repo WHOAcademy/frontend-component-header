@@ -12,8 +12,9 @@ import { Close, MenuIcon } from '@openedx/paragon/icons';
 import CourseLockUp from './CourseLockUp';
 import UserMenu from './UserMenu';
 import BrandNav from './BrandNav';
-import NavDropdownMenu from './NavDropdownMenu';
+import { type NavDropdownMenuItem } from './NavDropdownMenu';
 import StudioHeaderSearchButtonSlot from '../plugin-slots/StudioHeaderSearchButtonSlot';
+import StudioHeaderMainMenuSlot from '../plugin-slots/StudioHeaderMainMenuSlot';
 
 export interface HeaderBodyProps {
   studioBaseUrl: string;
@@ -28,13 +29,14 @@ export interface HeaderBodyProps {
   logoAltText: string;
   authenticatedUserAvatar?: string;
   username?: string;
-  isAdmin?: boolean;
   isMobile?: boolean;
   isHiddenMainMenu?: boolean;
+  // Current course/library key, threaded through so main-menu plugins can build scoped links.
+  contextId?: string;
   mainMenuDropdowns?: {
     id: string;
     buttonTitle: ReactNode;
-    items: { title: ReactNode; href: string; }[];
+    items: NavDropdownMenuItem[];
   }[];
   outlineLink?: string;
   searchButtonAction?: React.MouseEventHandler<HTMLButtonElement>;
@@ -48,11 +50,11 @@ const HeaderBody = ({
   org,
   title,
   username,
-  isAdmin,
   studioBaseUrl,
   logoutUrl,
   authenticatedUserAvatar,
   isMobile,
+  contextId,
   setModalPopupTarget = null,
   toggleModalPopup,
   isModalPopupOpen = false,
@@ -62,7 +64,6 @@ const HeaderBody = ({
   searchButtonAction,
   containerProps = {},
 }: HeaderBodyProps) => {
-
   const renderBrandNav = (
     <BrandNav
       {...{
@@ -83,8 +84,18 @@ const HeaderBody = ({
     >
       <ActionRow as="header">
         {isHiddenMainMenu ? (
-          <Row className="flex-nowrap ml-4">
+          <Row className="flex-nowrap align-items-center ml-4">
             {renderBrandNav}
+            {!isMobile && (
+              <StudioHeaderMainMenuSlot
+                mainMenuDropdowns={[]}
+                contextId={contextId}
+                org={org}
+                number={number}
+                title={title}
+                isHiddenMainMenu
+              />
+            )}
           </Row>
         ) : (
           <>
@@ -120,19 +131,14 @@ const HeaderBody = ({
                 {renderBrandNav}
               </>
             ) : (
-              <Nav data-testid="desktop-menu" className="ml-2">
-                {mainMenuDropdowns.map(dropdown => {
-                  const { id, buttonTitle, items } = dropdown;
-                  return (
-                    <NavDropdownMenu
-                      key={id}
-                      {...{
-                        id, buttonTitle, items,
-                      }}
-                    />
-                  );
-                })}
-              </Nav>
+              <StudioHeaderMainMenuSlot
+                mainMenuDropdowns={mainMenuDropdowns}
+                contextId={contextId}
+                org={org}
+                number={number}
+                title={title}
+                isHiddenMainMenu={false}
+              />
             )}
           </>
         )}
@@ -147,7 +153,6 @@ const HeaderBody = ({
               studioBaseUrl,
               logoutUrl,
               authenticatedUserAvatar,
-              isAdmin,
               isMobile,
             }}
           />

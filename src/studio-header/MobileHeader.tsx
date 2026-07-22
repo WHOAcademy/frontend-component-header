@@ -13,7 +13,6 @@ type Props = Pick<HeaderBodyProps,
 | 'logoAltText'
 | 'authenticatedUserAvatar'
 | 'username'
-| 'isAdmin'
 | 'mainMenuDropdowns'
 | 'outlineLink'
 >;

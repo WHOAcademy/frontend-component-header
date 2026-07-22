@@ -21,7 +21,6 @@ const defaultProps = {
   searchButtonAction: mockSearchButtonAction,
   username: 'testuser',
   authenticatedUserAvatar: 'avatar.png',
-  isAdmin: true,
   isMobile: false,
   isHiddenMainMenu: false,
   mainMenuDropdowns: [],

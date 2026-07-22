@@ -1,7 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Collapsible } from '@openedx/paragon';
-import { Link } from 'react-router-dom';
+import { getNavItemLinkProps, ExternalLinkIcon } from './navItemLink';
+
+const MobileMenuItemLink = ({ item }) => {
+  const { as: Component, ...linkProps } = getNavItemLinkProps(item);
+  // `linkProps`'s shape depends on which `Component` it resolved to (`'a'` vs `Link`); TS can't
+  // verify that pairing through a variable, same as react-bootstrap's own `as`-prop components.
+  return React.createElement(
+    Component as React.ElementType,
+    linkProps,
+    item.title,
+    item.openInNewTab && <ExternalLinkIcon className="float-right" />,
+  );
+};
+
+MobileMenuItemLink.propTypes = {
+  item: PropTypes.shape({
+    href: PropTypes.string,
+    title: PropTypes.node,
+    external: PropTypes.bool,
+    openInNewTab: PropTypes.bool,
+  }).isRequired,
+};
 
 const MobileMenu = ({ mainMenuDropdowns }) => (
   <div
@@ -20,9 +41,7 @@ const MobileMenu = ({ mainMenuDropdowns }) => (
             <ul className="p-0" style={{ listStyleType: 'none' }}>
               {items.map(item => (
                 <li className="mobile-menu-item">
-                  <Link to={item.href}>
-                    {item.title}
-                  </Link>
+                  <MobileMenuItemLink item={item} />
                 </li>
               ))}
             </ul>
@@ -40,6 +59,8 @@ MobileMenu.propTypes = {
     items: PropTypes.arrayOf(PropTypes.shape({
       href: PropTypes.string,
       title: PropTypes.node,
+      external: PropTypes.bool,
+      openInNewTab: PropTypes.bool,
     })),
   })),
 };
