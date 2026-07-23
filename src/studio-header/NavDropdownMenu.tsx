@@ -3,12 +3,16 @@ import {
   Dropdown,
   DropdownButton,
 } from '@openedx/paragon';
-import { Link } from 'react-router-dom';
+import getLinkProps, { type NavLinkItem } from './navLink';
+
+export interface NavDropdownMenuItem extends NavLinkItem {
+  title: ReactNode;
+}
 
 interface Props {
   id: string;
   buttonTitle: ReactNode;
-  items: { title: ReactNode; href: string; }[];
+  items: NavDropdownMenuItem[];
 }
 
 const NavDropdownMenu = ({
@@ -24,10 +28,9 @@ const NavDropdownMenu = ({
   >
     {items.map(item => (
       <Dropdown.Item
-        as={Link}
         key={`${item.title}-dropdown-item`}
-        to={item.href}
         className="small"
+        {...getLinkProps(item)}
       >
         {item.title}
       </Dropdown.Item>

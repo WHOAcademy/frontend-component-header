@@ -11,6 +11,46 @@ const messages = defineMessages({
     defaultMessage: 'Logout',
     description: 'Logout link',
   },
+  'header.user.menu.feedback': {
+    id: 'header.user.menu.feedback',
+    defaultMessage: 'Feedback',
+    description: 'Link to the WHO Academy feedback form',
+  },
+  'header.nav.courses': {
+    id: 'header.nav.courses',
+    defaultMessage: 'Courses',
+    description: 'Studio Home nav link to the courses list',
+  },
+  'header.nav.learningSpace': {
+    id: 'header.nav.learningSpace',
+    defaultMessage: 'Learning Space',
+    description: 'Studio Home nav link to the Learning Space app',
+  },
+  'header.nav.analytics': {
+    id: 'header.nav.analytics',
+    defaultMessage: 'Analytics',
+    description: 'Studio Home nav dropdown label for analytics dashboards',
+  },
+  'header.nav.analytics.whoAcademy': {
+    id: 'header.nav.analytics.whoAcademy',
+    defaultMessage: 'WHO Academy',
+    description: 'Analytics dropdown item linking to the WHO Academy dashboard',
+  },
+  'header.nav.analytics.iarc': {
+    id: 'header.nav.analytics.iarc',
+    defaultMessage: 'IARC',
+    description: 'Analytics dropdown item linking to the IARC dashboard',
+  },
+  'header.nav.settings.awards': {
+    id: 'header.nav.settings.awards',
+    defaultMessage: 'Awards',
+    description: 'Course page Settings dropdown item linking to Awards',
+  },
+  'header.nav.tools.instructorDashboard': {
+    id: 'header.nav.tools.instructorDashboard',
+    defaultMessage: 'Instructor Dashboard',
+    description: 'Course page Tools dropdown item linking to the Instructor Dashboard',
+  },
   'header.label.account.menu': {
     id: 'header.label.account.menu',
     defaultMessage: 'Account Menu',

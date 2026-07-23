@@ -1,7 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Collapsible } from '@openedx/paragon';
-import { Link } from 'react-router-dom';
+import getLinkProps from './navLink';
+
+const MobileMenuLink = ({ item }) => {
+  const { as: Component, ...linkProps } = getLinkProps(item);
+  return React.createElement(Component as React.ElementType, linkProps, item.title);
+};
+
+MobileMenuLink.propTypes = {
+  item: PropTypes.shape({
+    href: PropTypes.string,
+    title: PropTypes.node,
+    external: PropTypes.bool,
+    openInNewTab: PropTypes.bool,
+  }).isRequired,
+};
 
 const MobileMenu = ({ mainMenuDropdowns }) => (
   <div
@@ -20,9 +34,7 @@ const MobileMenu = ({ mainMenuDropdowns }) => (
             <ul className="p-0" style={{ listStyleType: 'none' }}>
               {items.map(item => (
                 <li className="mobile-menu-item">
-                  <Link to={item.href}>
-                    {item.title}
-                  </Link>
+                  <MobileMenuLink item={item} />
                 </li>
               ))}
             </ul>
@@ -40,6 +52,8 @@ MobileMenu.propTypes = {
     items: PropTypes.arrayOf(PropTypes.shape({
       href: PropTypes.string,
       title: PropTypes.node,
+      external: PropTypes.bool,
+      openInNewTab: PropTypes.bool,
     })),
   })),
 };
