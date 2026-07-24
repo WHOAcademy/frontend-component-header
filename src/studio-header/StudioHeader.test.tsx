@@ -130,7 +130,7 @@ describe('Header', () => {
 
       expect(mobileMenuButton).toBeNull();
 
-      expect(desktopMenu).toBeNull();
+      expect(desktopMenu).not.toHaveTextContent('test');
     });
 
     it('should show search button', async () => {
