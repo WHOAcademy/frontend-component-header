@@ -12,7 +12,8 @@ import { Close, MenuIcon } from '@openedx/paragon/icons';
 import CourseLockUp from './CourseLockUp';
 import UserMenu from './UserMenu';
 import BrandNav from './BrandNav';
-import NavDropdownMenu from './NavDropdownMenu';
+import NavDropdownMenu, { type NavDropdownMenuItem } from './NavDropdownMenu';
+import getLinkProps from './navLink';
 import StudioHeaderSearchButtonSlot from '../plugin-slots/StudioHeaderSearchButtonSlot';
 
 export interface HeaderBodyProps {
@@ -31,11 +32,14 @@ export interface HeaderBodyProps {
   isAdmin?: boolean;
   isMobile?: boolean;
   isHiddenMainMenu?: boolean;
-  mainMenuDropdowns?: {
+  mainMenuDropdowns?: ({
     id: string;
     buttonTitle: ReactNode;
-    items: { title: ReactNode; href: string; }[];
-  }[];
+    items?: NavDropdownMenuItem[];
+    href?: string;
+    external?: boolean;
+    openInNewTab?: boolean;
+  })[];
   outlineLink?: string;
   searchButtonAction?: React.MouseEventHandler<HTMLButtonElement>;
   containerProps?: Omit<ComponentProps<typeof Container>, 'children'>;
@@ -62,7 +66,6 @@ const HeaderBody = ({
   searchButtonAction,
   containerProps = {},
 }: HeaderBodyProps) => {
-
   const renderBrandNav = (
     <BrandNav
       {...{
@@ -75,6 +78,20 @@ const HeaderBody = ({
 
   const { className: containerClassName, ...restContainerProps } = containerProps;
 
+  const renderMainMenu = (
+    <Nav data-testid="desktop-menu" className="ml-2">
+      {mainMenuDropdowns.map((entry) => (
+        entry.items ? (
+          <NavDropdownMenu key={entry.id} id={entry.id} buttonTitle={entry.buttonTitle} items={entry.items} />
+        ) : (
+          <Nav.Link key={entry.id} className="mr-2" {...getLinkProps(entry as { href: string })}>
+            {entry.buttonTitle}
+          </Nav.Link>
+        )
+      ))}
+    </Nav>
+  );
+
   return (
     <Container
       size="xl"
@@ -83,8 +100,9 @@ const HeaderBody = ({
     >
       <ActionRow as="header">
         {isHiddenMainMenu ? (
-          <Row className="flex-nowrap ml-4">
+          <Row className="flex-nowrap align-items-center ml-4">
             {renderBrandNav}
+            {!isMobile && renderMainMenu}
           </Row>
         ) : (
           <>
@@ -119,21 +137,7 @@ const HeaderBody = ({
                 <ActionRow.Spacer />
                 {renderBrandNav}
               </>
-            ) : (
-              <Nav data-testid="desktop-menu" className="ml-2">
-                {mainMenuDropdowns.map(dropdown => {
-                  const { id, buttonTitle, items } = dropdown;
-                  return (
-                    <NavDropdownMenu
-                      key={id}
-                      {...{
-                        id, buttonTitle, items,
-                      }}
-                    />
-                  );
-                })}
-              </Nav>
-            )}
+            ) : renderMainMenu}
           </>
         )}
         <ActionRow.Spacer />
