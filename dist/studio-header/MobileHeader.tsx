@@ -16,6 +16,7 @@ type Props = Pick<HeaderBodyProps,
 | 'isAdmin'
 | 'mainMenuDropdowns'
 | 'outlineLink'
+| 'helpUrl'
 >;
 
 const MobileHeader: FunctionComponent<Props> = ({

@@ -25,6 +25,7 @@ type Props = Pick<HeaderBodyProps,
 | 'mainMenuDropdowns'
 | 'outlineLink'
 | 'searchButtonAction'
+| 'helpUrl'
 > & {
   isNewHomePage: boolean;
   // Current course/library key; used to build WHO Academy's course-scoped nav items.
@@ -40,6 +41,7 @@ const StudioHeader: FunctionComponent<Props> = ({
   mainMenuDropdowns,
   outlineLink,
   searchButtonAction,
+  helpUrl,
   contextId,
   isNewHomePage,
 }) => {
@@ -68,6 +70,7 @@ const StudioHeader: FunctionComponent<Props> = ({
     mainMenuDropdowns: whoMainMenuDropdowns,
     outlineLink,
     searchButtonAction,
+    helpUrl,
   };
 
   return (

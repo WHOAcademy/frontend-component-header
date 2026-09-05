@@ -41,6 +41,11 @@ const messages = defineMessages({
     defaultMessage: 'IARC',
     description: 'Analytics dropdown item linking to the IARC dashboard',
   },
+  'header.nav.help': {
+    id: 'header.nav.help',
+    defaultMessage: 'Help',
+    description: 'Link to the Studio help documentation, opens in a new tab',
+  },
   'header.nav.settings.awards': {
     id: 'header.nav.settings.awards',
     defaultMessage: 'Awards',

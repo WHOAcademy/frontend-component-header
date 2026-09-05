@@ -1,5 +1,6 @@
 import React, { type ReactNode, type ComponentProps } from 'react';
 import classNames from 'classnames';
+import { useIntl } from '@edx/frontend-platform/i18n';
 import {
   ActionRow,
   Button,
@@ -15,6 +16,7 @@ import BrandNav from './BrandNav';
 import NavDropdownMenu, { type NavDropdownMenuItem } from './NavDropdownMenu';
 import getLinkProps from './navLink';
 import StudioHeaderSearchButtonSlot from '../plugin-slots/StudioHeaderSearchButtonSlot';
+import messages from './messages';
 
 export interface HeaderBodyProps {
   studioBaseUrl: string;
@@ -43,6 +45,7 @@ export interface HeaderBodyProps {
   outlineLink?: string;
   searchButtonAction?: React.MouseEventHandler<HTMLButtonElement>;
   containerProps?: Omit<ComponentProps<typeof Container>, 'children'>;
+  helpUrl?: string;
 }
 
 const HeaderBody = ({
@@ -65,7 +68,9 @@ const HeaderBody = ({
   outlineLink,
   searchButtonAction,
   containerProps = {},
+  helpUrl,
 }: HeaderBodyProps) => {
+  const intl = useIntl();
   const renderBrandNav = (
     <BrandNav
       {...{
@@ -144,6 +149,16 @@ const HeaderBody = ({
         <StudioHeaderSearchButtonSlot
           searchButtonAction={searchButtonAction}
         />
+        {helpUrl && (
+          <Nav>
+            <Nav.Link
+              className="mr-2"
+              {...getLinkProps({ href: helpUrl, openInNewTab: true })}
+            >
+              {intl.formatMessage(messages['header.nav.help'])}
+            </Nav.Link>
+          </Nav>
+        )}
         <Nav>
           <UserMenu
             {...{
