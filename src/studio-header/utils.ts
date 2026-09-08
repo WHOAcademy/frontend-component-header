@@ -1,5 +1,5 @@
 import { getConfig } from '@edx/frontend-platform';
-import { getAuthenticatedUser } from '@edx/frontend-platform/auth';
+import { getAuthenticatedHttpClient, getAuthenticatedUser } from '@edx/frontend-platform/auth';
 import messages from './messages';
 
 // Classifies the current page into a feedback "subject".
@@ -30,6 +30,37 @@ const getFeedbackItem = (intl) => {
   };
 };
 
+// Calls the SSO logout-token API to fetch an id_token for the current user, then redirects
+// to `logoutUrl` with that token attached so the IdP session is torn down too. Falls back to
+// a plain redirect to `logoutUrl` if the API call fails or returns no token.
+const performStudioLogout = async (logoutUrl) => {
+  const { LMS_BASE_URL: lmsBaseUrl } = getConfig();
+  try {
+    const response = await getAuthenticatedHttpClient().post(
+      `${lmsBaseUrl}/api/openedx-plugin-app/auth/sso_logout_token`,
+    );
+    const { error, id_token: idToken } = response.data?.data || {};
+    if (!error && idToken) {
+      const separator = logoutUrl.includes('?') ? '&' : '?';
+      window.location.href = `${logoutUrl}${separator}id_token_hint=${idToken}`;
+      return;
+    }
+  } catch (error) {
+    // Fall through to the default logout below.
+  }
+  window.location.href = logoutUrl;
+};
+
+const getLogoutItem = (logoutUrl, intl) => ({
+  href: `${logoutUrl}`,
+  title: intl.formatMessage(messages['header.user.menu.logout']),
+  external: true,
+  onClick: (e) => {
+    e.preventDefault();
+    performStudioLogout(logoutUrl);
+  },
+});
+
 const getUserMenuItems = ({
   studioBaseUrl,
   logoutUrl,
@@ -40,20 +71,16 @@ const getUserMenuItems = ({
     {
       href: `${studioBaseUrl}`,
       title: intl.formatMessage(messages['header.user.menu.studio']),
-    }, {
-      href: `${logoutUrl}`,
-      title: intl.formatMessage(messages['header.user.menu.logout']),
     },
+    getLogoutItem(logoutUrl, intl),
   ];
   if (isAdmin) {
     items = [
       {
         href: `${studioBaseUrl}`,
         title: intl.formatMessage(messages['header.user.menu.studio']),
-      }, {
-        href: `${logoutUrl}`,
-        title: intl.formatMessage(messages['header.user.menu.logout']),
       },
+      getLogoutItem(logoutUrl, intl),
     ];
   }
 
