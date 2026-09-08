@@ -1,17 +1,18 @@
 import React from 'react';
 import { PluginSlot } from '@openedx/frontend-plugin-framework';
 import MobileLoggedOutItems, { mobileHeaderLoggedOutItemsDataShape } from '../../mobile-header/MobileLoggedOutItems';
-const MobileLoggedOutItemsSlot = ({
-  items
-}) => /*#__PURE__*/React.createElement(PluginSlot, {
-  id: "org.openedx.frontend.layout.header_mobile_logged_out_items.v1",
-  idAliases: ['mobile_logged_out_items_slot'],
-  slotOptions: {
-    mergeProps: true
-  }
-}, /*#__PURE__*/React.createElement(MobileLoggedOutItems, {
-  items: items
-}));
+var MobileLoggedOutItemsSlot = function MobileLoggedOutItemsSlot(_ref) {
+  var items = _ref.items;
+  return /*#__PURE__*/React.createElement(PluginSlot, {
+    id: "org.openedx.frontend.layout.header_mobile_logged_out_items.v1",
+    idAliases: ['mobile_logged_out_items_slot'],
+    slotOptions: {
+      mergeProps: true
+    }
+  }, /*#__PURE__*/React.createElement(MobileLoggedOutItems, {
+    items: items
+  }));
+};
 MobileLoggedOutItemsSlot.propTypes = {
   items: mobileHeaderLoggedOutItemsDataShape
 };

@@ -1,3 +1,9 @@
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 import React, { useContext } from 'react';
 import Responsive from 'react-responsive';
 import { useIntl } from '@edx/frontend-platform/i18n';
@@ -8,7 +14,7 @@ import DesktopHeaderSlot from './plugin-slots/DesktopHeaderSlot';
 import MobileHeaderSlot from './plugin-slots/MobileHeaderSlot';
 import messages from './Header.messages';
 ensureConfig(['LMS_BASE_URL', 'LOGOUT_URL', 'LOGIN_URL', 'SITE_NAME', 'LOGO_URL', 'ORDER_HISTORY_URL'], 'Header component');
-subscribe(APP_CONFIG_INITIALIZED, () => {
+subscribe(APP_CONFIG_INITIALIZED, function () {
   mergeConfig({
     AUTHN_MINIMAL_HEADER: !!process.env.AUTHN_MINIMAL_HEADER
   }, 'Header additional config');
@@ -29,63 +35,59 @@ subscribe(APP_CONFIG_INITIALIZED, () => {
  * @param {list} userMenuItems - The list of user menu items to display.
  * See the documentation for the structure of user menu item.
  */
-const Header = ({
-  mainMenuItems,
-  secondaryMenuItems,
-  userMenuItems
-}) => {
-  const {
-    authenticatedUser,
-    config
-  } = useContext(AppContext);
-  const intl = useIntl();
-  const defaultMainMenu = [{
+var Header = function Header(_ref) {
+  var mainMenuItems = _ref.mainMenuItems,
+    secondaryMenuItems = _ref.secondaryMenuItems,
+    userMenuItems = _ref.userMenuItems;
+  var _useContext = useContext(AppContext),
+    authenticatedUser = _useContext.authenticatedUser,
+    config = _useContext.config;
+  var intl = useIntl();
+  var defaultMainMenu = [{
     type: 'item',
-    href: `${config.LMS_BASE_URL}/dashboard`,
+    href: "".concat(config.LMS_BASE_URL, "/dashboard"),
     content: intl.formatMessage(messages['header.links.courses'])
   }];
-  const defaultUserMenu = authenticatedUser === null ? [] : [{
+  var defaultUserMenu = authenticatedUser === null ? [] : [{
     heading: '',
     items: [{
       type: 'item',
-      href: `${config.LMS_BASE_URL}/dashboard`,
+      href: "".concat(config.LMS_BASE_URL, "/dashboard"),
       content: intl.formatMessage(messages['header.user.menu.dashboard'])
     }, {
       type: 'item',
-      href: `${config.ACCOUNT_PROFILE_URL}/u/${authenticatedUser.username}`,
+      href: "".concat(config.ACCOUNT_PROFILE_URL, "/u/").concat(authenticatedUser.username),
       content: intl.formatMessage(messages['header.user.menu.profile'])
     }, {
       type: 'item',
       href: config.ACCOUNT_SETTINGS_URL,
       content: intl.formatMessage(messages['header.user.menu.account.settings'])
-    },
-    // Users should only see Order History if have a ORDER_HISTORY_URL define in the environment.
-    ...(config.ORDER_HISTORY_URL ? [{
+    }].concat(_toConsumableArray(config.ORDER_HISTORY_URL ? [{
       type: 'item',
       href: config.ORDER_HISTORY_URL,
       content: intl.formatMessage(messages['header.user.menu.order.history'])
-    }] : []), {
+    }] : []), [{
       type: 'item',
       href: config.LOGOUT_URL,
       content: intl.formatMessage(messages['header.user.menu.logout'])
-    }]
+    }])
   }];
-  const mainMenu = mainMenuItems || defaultMainMenu;
-  const secondaryMenu = secondaryMenuItems || [];
-  const userMenu = authenticatedUser === null ? [] : userMenuItems || defaultUserMenu;
-  const loggedOutItems = [{
+  var mainMenu = mainMenuItems || defaultMainMenu;
+  var secondaryMenu = secondaryMenuItems || [];
+  var userMenu = authenticatedUser === null ? [] : userMenuItems || defaultUserMenu;
+  var loggedOutItems = [{
     type: 'item',
     href: config.LOGIN_URL,
     content: intl.formatMessage(messages['header.user.menu.login'])
   }, {
     type: 'item',
-    href: `${config.LMS_BASE_URL}/register`,
+    href: "".concat(config.LMS_BASE_URL, "/register"),
     content: intl.formatMessage(messages['header.user.menu.register'])
   }];
-  const props = {
+  var props = {
     logo: config.LOGO_URL,
     logoAltText: config.SITE_NAME,
-    logoDestination: `${config.LMS_BASE_URL}/dashboard`,
+    logoDestination: "".concat(config.LMS_BASE_URL, "/dashboard"),
     loggedIn: authenticatedUser !== null,
     username: authenticatedUser !== null ? authenticatedUser.username : null,
     avatar: authenticatedUser !== null ? authenticatedUser.avatar : null,

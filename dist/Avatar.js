@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { AvatarIcon } from './Icons';
-const Avatar = ({
-  size,
-  src,
-  alt,
-  className
-}) => {
-  const avatar = src ? /*#__PURE__*/React.createElement("img", {
+var Avatar = function Avatar(_ref) {
+  var size = _ref.size,
+    src = _ref.src,
+    alt = _ref.alt,
+    className = _ref.className;
+  var avatar = src ? /*#__PURE__*/React.createElement("img", {
     className: "d-block w-100 h-100",
     src: src,
     alt: alt
@@ -25,7 +24,7 @@ const Avatar = ({
       height: size,
       width: size
     },
-    className: `avatar overflow-hidden d-inline-flex rounded-circle ${className}`
+    className: "avatar overflow-hidden d-inline-flex rounded-circle ".concat(className)
   }, avatar);
 };
 Avatar.propTypes = {
