@@ -1,9 +1,11 @@
+import type { MouseEventHandler } from 'react';
 import { Link } from 'react-router-dom';
 
 export interface NavLinkItem {
   href: string;
   external?: boolean;
   openInNewTab?: boolean;
+  onClick?: MouseEventHandler;
 }
 
 // Props for rendering `item` as an internal route, a plain external link, or a new-tab external

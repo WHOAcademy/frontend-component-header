@@ -31,6 +31,7 @@ const NavDropdownMenu = ({
         key={`${item.title}-dropdown-item`}
         className="small"
         {...getLinkProps(item)}
+        onClick={item.onClick}
       >
         {item.title}
       </Dropdown.Item>
