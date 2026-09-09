@@ -30,7 +30,7 @@ type Props = Pick<HeaderBodyProps,
   isNewHomePage: boolean;
   // Current course/library key; used to build WHO Academy's course-scoped nav items.
   contextId?: string;
-  // Library pages have no course-scoped instructor/awards pages, so those items are skipped.
+  // Library pages have no course-scoped instructor/awards/analytics pages, so those items are skipped.
   isLibrary?: boolean;
 };
 
@@ -55,7 +55,7 @@ const StudioHeader: FunctionComponent<Props> = ({
   if (isHiddenMainMenu) {
     whoMainMenuDropdowns = buildWhoHomeNav(intl);
   } else if (contextId && !isLibrary) {
-    whoMainMenuDropdowns = addWhoCourseNavItems(mainMenuDropdowns, contextId, intl);
+    whoMainMenuDropdowns = addWhoCourseNavItems(mainMenuDropdowns, contextId, intl, title);
   }
   const props = {
     logo: config.LOGO_URL,
