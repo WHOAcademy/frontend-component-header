@@ -35,11 +35,22 @@ export const buildWhoHomeNav = (intl) => {
 };
 
 // Adds items to a course page's Settings/Tools dropdowns.
-export const addWhoCourseNavItems = (mainMenuDropdowns, contextId: string, intl) => {
+export const addWhoCourseNavItems = (
+  mainMenuDropdowns,
+  contextId: string,
+  intl,
+  courseName?: string,
+) => {
   const {
     OPENEDX_EXTENSION_FRONTEND_URL: extensionUrl,
     LMS_BASE_URL: lmsBaseUrl,
+    LAP_COMMON_DASHBOARD_WITH_COURSE_NAME_FILTER_LINK: courseAnalyticsTemplate,
   } = getConfig();
+
+  // the query string it sits in.
+  const courseAnalyticsLink = courseAnalyticsTemplate && courseName
+    ? courseAnalyticsTemplate.replace(/__COURSE_NAME__/g, encode(courseName))
+    : '';
 
   return mainMenuDropdowns.map((dropdown) => {
     if (dropdown.id?.startsWith('Settings')) {
@@ -64,6 +75,11 @@ export const addWhoCourseNavItems = (mainMenuDropdowns, contextId: string, intl)
             title: intl.formatMessage(messages['header.nav.tools.instructorDashboard']),
             href: `${lmsBaseUrl}/courses/${encode(contextId)}/instructor`,
             external: true,
+          }] : []),
+          ...(courseAnalyticsLink ? [{
+            title: intl.formatMessage(messages['header.nav.tools.courseAnalytics']),
+            href: courseAnalyticsLink,
+            openInNewTab: true,
           }] : []),
         ],
       };

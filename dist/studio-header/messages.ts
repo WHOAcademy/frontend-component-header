@@ -56,6 +56,11 @@ const messages = defineMessages({
     defaultMessage: 'Instructor Dashboard',
     description: 'Course page Tools dropdown item linking to the Instructor Dashboard',
   },
+  'header.nav.tools.courseAnalytics': {
+    id: 'header.nav.tools.courseAnalytics',
+    defaultMessage: 'Analytics',
+    description: 'Course page Tools dropdown item linking to the course analytics dashboard, opens in a new tab',
+  },
   'header.label.account.menu': {
     id: 'header.label.account.menu',
     defaultMessage: 'Account Menu',
