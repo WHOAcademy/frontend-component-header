@@ -10,16 +10,18 @@ import CourseInfoSlot from '../plugin-slots/CourseInfoSlot';
 import { courseInfoDataShape } from './LearningHeaderCourseInfo';
 import messages from './messages';
 import LearningHelpSlot from '../plugin-slots/LearningHelpSlot';
-var LearningHeader = function LearningHeader(_ref) {
-  var courseOrg = _ref.courseOrg,
-    courseNumber = _ref.courseNumber,
-    courseTitle = _ref.courseTitle,
-    showUserDropdown = _ref.showUserDropdown;
-  var intl = useIntl();
-  var _useContext = useContext(AppContext),
-    authenticatedUser = _useContext.authenticatedUser;
-  var headerLogo = /*#__PURE__*/React.createElement(LogoSlot, {
-    href: "".concat(getConfig().LMS_BASE_URL, "/dashboard"),
+const LearningHeader = ({
+  courseOrg,
+  courseNumber,
+  courseTitle,
+  showUserDropdown
+}) => {
+  const intl = useIntl();
+  const {
+    authenticatedUser
+  } = useContext(AppContext);
+  const headerLogo = /*#__PURE__*/React.createElement(LogoSlot, {
+    href: `${getConfig().LMS_BASE_URL}/dashboard`,
     src: getConfig().LOGO_URL,
     alt: getConfig().SITE_NAME
   });

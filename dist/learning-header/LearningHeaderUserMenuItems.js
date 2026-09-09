@@ -1,15 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Dropdown } from '@openedx/paragon';
-var LearningHeaderUserMenuItems = function LearningHeaderUserMenuItems(_ref) {
-  var items = _ref.items;
-  return items.map(function (item) {
-    return /*#__PURE__*/React.createElement(Dropdown.Item, {
-      href: item.href
-    }, item.message);
-  });
-};
-export var learningHeaderUserMenuDataShape = {
+const LearningHeaderUserMenuItems = ({
+  items
+}) => items.map(item => /*#__PURE__*/React.createElement(Dropdown.Item, {
+  href: item.href
+}, item.message));
+export const learningHeaderUserMenuDataShape = {
   items: PropTypes.arrayOf(PropTypes.shape({
     message: PropTypes.string,
     href: PropTypes.string

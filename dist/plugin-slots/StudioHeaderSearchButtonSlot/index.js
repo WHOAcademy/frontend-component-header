@@ -5,9 +5,10 @@ import { Search } from '@openedx/paragon/icons';
 import PropTypes from 'prop-types';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import messages from '../../studio-header/messages';
-var StudioHeaderSearchButtonSlot = function StudioHeaderSearchButtonSlot(_ref) {
-  var searchButtonAction = _ref.searchButtonAction;
-  var intl = useIntl();
+const StudioHeaderSearchButtonSlot = ({
+  searchButtonAction
+}) => {
+  const intl = useIntl();
   return /*#__PURE__*/React.createElement(PluginSlot, {
     id: "org.openedx.frontend.layout.studio_header_search_button_slot.v1"
   }, searchButtonAction && /*#__PURE__*/React.createElement(Nav, null, /*#__PURE__*/React.createElement(IconButton, {

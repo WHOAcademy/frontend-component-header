@@ -30,9 +30,30 @@ const getFeedbackItem = (intl) => {
   };
 };
 
-// Calls the SSO logout-token API to fetch an id_token for the current user, then redirects
-// to `logoutUrl` with that token attached so the IdP session is torn down too. Falls back to
-// a plain redirect to `logoutUrl` if the API call fails or returns no token.
+const decodeJwtPayload = (token) => {
+  const payload = token.split('.')[1];
+  if (!payload) {
+    return null;
+  }
+  const base64 = payload.replace(/-/g, '+').replace(/_/g, '/');
+  const padded = base64.padEnd(base64.length + ((4 - (base64.length % 4)) % 4), '=');
+  const bytes = Uint8Array.from(window.atob(padded), (char) => char.charCodeAt(0));
+  return JSON.parse(new TextDecoder().decode(bytes));
+};
+
+const getSsoLogoutUrl = (idToken) => {
+  const { SSO_LOGOUT_URL: ssoLogoutUrl } = getConfig();
+  if (ssoLogoutUrl) {
+    return ssoLogoutUrl;
+  }
+  try {
+    const { iss } = decodeJwtPayload(idToken) || {};
+    return iss ? `${iss.replace(/\/$/, '')}/protocol/openid-connect/logout` : null;
+  } catch (error) {
+    return null;
+  }
+};
+
 const performStudioLogout = async (logoutUrl) => {
   const { LMS_BASE_URL: lmsBaseUrl } = getConfig();
   try {
@@ -40,9 +61,14 @@ const performStudioLogout = async (logoutUrl) => {
       `${lmsBaseUrl}/api/openedx-plugin-app/auth/sso_logout_token`,
     );
     const { error, id_token: idToken } = response.data?.data || {};
-    if (!error && idToken) {
-      const separator = logoutUrl.includes('?') ? '&' : '?';
-      window.location.href = `${logoutUrl}${separator}id_token_hint=${idToken}`;
+    const ssoLogoutUrl = !error && idToken ? getSsoLogoutUrl(idToken) : null;
+    if (ssoLogoutUrl) {
+      const params = new URLSearchParams({
+        post_logout_redirect_uri: logoutUrl,
+        id_token_hint: idToken,
+      });
+      const separator = ssoLogoutUrl.includes('?') ? '&' : '?';
+      window.location.href = `${ssoLogoutUrl}${separator}${params.toString()}`;
       return;
     }
   } catch (error) {

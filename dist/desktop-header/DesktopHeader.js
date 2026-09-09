@@ -20,65 +20,58 @@ import messages from '../Header.messages';
 
 // Assets
 
-var DesktopHeader = function DesktopHeader(_ref) {
-  var mainMenu = _ref.mainMenu,
-    secondaryMenu = _ref.secondaryMenu,
-    userMenu = _ref.userMenu,
-    loggedOutItems = _ref.loggedOutItems,
-    logo = _ref.logo,
-    logoAltText = _ref.logoAltText,
-    logoDestination = _ref.logoDestination,
-    avatar = _ref.avatar,
-    username = _ref.username,
-    loggedIn = _ref.loggedIn;
-  var intl = useIntl();
-  var renderMainMenu = function renderMainMenu() {
-    return /*#__PURE__*/React.createElement(DesktopMainMenuSlot, {
-      menu: mainMenu
-    });
-  };
-  var renderSecondaryMenu = function renderSecondaryMenu() {
-    return /*#__PURE__*/React.createElement(DesktopSecondaryMenuSlot, {
-      menu: secondaryMenu
-    });
-  };
-  var renderUserMenu = function renderUserMenu() {
-    return /*#__PURE__*/React.createElement(Menu, {
-      transitionClassName: "menu-dropdown",
-      transitionTimeout: 250
-    }, /*#__PURE__*/React.createElement(MenuTrigger, {
-      tag: "button",
-      "aria-label": intl.formatMessage(messages['header.label.account.menu.for'], {
-        username: username
-      }),
-      className: "btn btn-outline-primary d-inline-flex align-items-center pl-2 pr-3"
-    }, /*#__PURE__*/React.createElement(DesktopUserMenuToggleSlot, {
-      avatar: avatar,
-      label: username
-    })), /*#__PURE__*/React.createElement(MenuContent, {
-      className: "mb-0 dropdown-menu show dropdown-menu-right pin-right shadow py-2"
-    }, /*#__PURE__*/React.createElement(DesktopUserMenuSlot, {
-      menu: userMenu
-    })));
-  };
-  var renderLoggedOutItems = function renderLoggedOutItems() {
-    return /*#__PURE__*/React.createElement(DesktopLoggedOutItemsSlot, {
-      items: loggedOutItems
-    });
-  };
-  var logoProps = {
+const DesktopHeader = ({
+  mainMenu,
+  secondaryMenu,
+  userMenu,
+  loggedOutItems,
+  logo,
+  logoAltText,
+  logoDestination,
+  avatar,
+  username,
+  loggedIn
+}) => {
+  const intl = useIntl();
+  const renderMainMenu = () => /*#__PURE__*/React.createElement(DesktopMainMenuSlot, {
+    menu: mainMenu
+  });
+  const renderSecondaryMenu = () => /*#__PURE__*/React.createElement(DesktopSecondaryMenuSlot, {
+    menu: secondaryMenu
+  });
+  const renderUserMenu = () => /*#__PURE__*/React.createElement(Menu, {
+    transitionClassName: "menu-dropdown",
+    transitionTimeout: 250
+  }, /*#__PURE__*/React.createElement(MenuTrigger, {
+    tag: "button",
+    "aria-label": intl.formatMessage(messages['header.label.account.menu.for'], {
+      username
+    }),
+    className: "btn btn-outline-primary d-inline-flex align-items-center pl-2 pr-3"
+  }, /*#__PURE__*/React.createElement(DesktopUserMenuToggleSlot, {
+    avatar: avatar,
+    label: username
+  })), /*#__PURE__*/React.createElement(MenuContent, {
+    className: "mb-0 dropdown-menu show dropdown-menu-right pin-right shadow py-2"
+  }, /*#__PURE__*/React.createElement(DesktopUserMenuSlot, {
+    menu: userMenu
+  })));
+  const renderLoggedOutItems = () => /*#__PURE__*/React.createElement(DesktopLoggedOutItemsSlot, {
+    items: loggedOutItems
+  });
+  const logoProps = {
     src: logo,
     alt: logoAltText,
     href: logoDestination
   };
-  var logoClasses = getConfig().AUTHN_MINIMAL_HEADER ? 'mw-100' : null;
+  const logoClasses = getConfig().AUTHN_MINIMAL_HEADER ? 'mw-100' : null;
   return /*#__PURE__*/React.createElement("header", {
     className: "site-header-desktop"
   }, /*#__PURE__*/React.createElement("a", {
     className: "nav-skip sr-only sr-only-focusable",
     href: "#main"
   }, intl.formatMessage(messages['header.label.skip.nav'])), /*#__PURE__*/React.createElement("div", {
-    className: "container-fluid ".concat(logoClasses)
+    className: `container-fluid ${logoClasses}`
   }, /*#__PURE__*/React.createElement("div", {
     className: "nav-container position-relative d-flex align-items-center"
   }, /*#__PURE__*/React.createElement(LogoSlot, logoProps), /*#__PURE__*/React.createElement("nav", {
@@ -89,7 +82,7 @@ var DesktopHeader = function DesktopHeader(_ref) {
     className: "nav secondary-menu-container align-items-center ml-auto"
   }, loggedIn ? /*#__PURE__*/React.createElement(React.Fragment, null, renderSecondaryMenu(), renderUserMenu()) : renderLoggedOutItems()))));
 };
-export var desktopHeaderDataShape = {
+export const desktopHeaderDataShape = {
   mainMenu: desktopHeaderMainOrSecondaryMenuDataShape,
   secondaryMenu: desktopHeaderMainOrSecondaryMenuDataShape,
   userMenu: desktopUserMenuDataShape,

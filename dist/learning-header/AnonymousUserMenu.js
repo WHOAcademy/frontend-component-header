@@ -4,11 +4,11 @@ import { getLoginRedirectUrl } from '@edx/frontend-platform/auth';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import LearningLoggedOutItemsSlot from '../plugin-slots/LearningLoggedOutItemsSlot';
 import genericMessages from '../generic/messages';
-var AnonymousUserMenu = function AnonymousUserMenu() {
-  var intl = useIntl();
-  var buttonsInfo = [{
+const AnonymousUserMenu = () => {
+  const intl = useIntl();
+  const buttonsInfo = [{
     message: intl.formatMessage(genericMessages.registerSentenceCase),
-    href: "".concat(getConfig().LMS_BASE_URL, "/register?next=").concat(encodeURIComponent(global.location.href))
+    href: `${getConfig().LMS_BASE_URL}/register?next=${encodeURIComponent(global.location.href)}`
   }, {
     message: intl.formatMessage(genericMessages.signInSentenceCase),
     href: getLoginRedirectUrl(global.location.href),
