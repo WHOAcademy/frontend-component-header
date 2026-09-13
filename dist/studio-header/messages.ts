@@ -26,21 +26,6 @@ const messages = defineMessages({
     defaultMessage: 'Learning Space',
     description: 'Studio Home nav link to the Learning Space app',
   },
-  'header.nav.analytics': {
-    id: 'header.nav.analytics',
-    defaultMessage: 'Analytics',
-    description: 'Studio Home nav dropdown label for analytics dashboards',
-  },
-  'header.nav.analytics.whoAcademy': {
-    id: 'header.nav.analytics.whoAcademy',
-    defaultMessage: 'WHO Academy',
-    description: 'Analytics dropdown item linking to the WHO Academy dashboard',
-  },
-  'header.nav.analytics.iarc': {
-    id: 'header.nav.analytics.iarc',
-    defaultMessage: 'IARC',
-    description: 'Analytics dropdown item linking to the IARC dashboard',
-  },
   'header.nav.help': {
     id: 'header.nav.help',
     defaultMessage: 'Help',
