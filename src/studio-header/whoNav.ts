@@ -11,15 +11,6 @@ export const buildWhoHomeNav = (intl) => {
     LAP_IARC_DASHBOARD_LINK: iarcDashboard,
   } = getConfig();
 
-  const analyticsItems = [
-    ...(whoaDashboard ? [{
-      title: intl.formatMessage(messages['header.nav.analytics.whoAcademy']), href: whoaDashboard, openInNewTab: true,
-    }] : []),
-    ...(iarcDashboard ? [{
-      title: intl.formatMessage(messages['header.nav.analytics.iarc']), href: iarcDashboard, openInNewTab: true,
-    }] : []),
-  ];
-
   return [
     { id: 'who-nav-courses', buttonTitle: intl.formatMessage(messages['header.nav.courses']), href: '/home' },
     ...(learningSpaceUrl ? [{
@@ -27,9 +18,6 @@ export const buildWhoHomeNav = (intl) => {
       buttonTitle: intl.formatMessage(messages['header.nav.learningSpace']),
       href: learningSpaceUrl,
       external: true,
-    }] : []),
-    ...(analyticsItems.length ? [{
-      id: 'who-nav-analytics', buttonTitle: intl.formatMessage(messages['header.nav.analytics']), items: analyticsItems,
     }] : []),
   ];
 };
